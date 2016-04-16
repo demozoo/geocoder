@@ -1,0 +1,40 @@
+Demozoo geocoder
+================
+
+A place name lookup API based on the geonames.org dataset.
+
+We made our own because all the existing lookup services are rubbish. This one's fairly rubbish too, but at least it won't get shut down by Google or Yahoo to maximise shareholder value.
+
+
+API endpoints
+-------------
+
+* Search: /?q=lutjebroek
+* Show: /2751379/
+
+
+Installation
+------------
+
+    vagrant up
+    vagrant ssh
+    ./manage.py runserver 0.0.0.0:8000
+
+or
+
+    pip install -r requirements.txt
+    ./manage.py migrate
+    ./manage.py load_geonames
+    ./manage.py load_asciified_geonames
+    ./manage.py runserver
+
+Running `load_geonames` and `load_asciified_geonames` requires about 2GB memory. Running the service itself probably takes considerably less.
+
+
+Acceptable use policy
+---------------------
+
+Don't be a dick, and then I won't have to waste my time locking it down with API keys and rate limiting and that sort of rubbish.
+
+
+Matt Westcott <matt@west.co.tt> - https://twitter.com/gasmanic
