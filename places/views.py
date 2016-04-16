@@ -1,6 +1,7 @@
 import json
 
 from django.http import HttpResponse
+from django.shortcuts import get_object_or_404
 
 from places.models import Locality
 
@@ -18,3 +19,18 @@ def search(request):
 	]
 
 	return HttpResponse(json.dumps(results), content_type='application/json')
+
+
+def show(request, locality_id):
+	place = get_object_or_404(Locality, pk=locality_id)
+	result = {
+		'id': place.pk,
+		'name': place.name,
+		'full_name': place.long_name,
+		'country_name': place.country.name,
+		'country_code': place.country.code,
+		'latitude': float(place.latitude),
+		'longitude': float(place.longitude),
+	}
+
+	return HttpResponse(json.dumps(result), content_type='application/json')

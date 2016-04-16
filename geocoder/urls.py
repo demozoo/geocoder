@@ -23,4 +23,5 @@ import places.views
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^$', places.views.search),
+    url(r'^(\d+)/$', places.views.show),
 ]
