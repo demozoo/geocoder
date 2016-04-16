@@ -1,0 +1,5 @@
+/.vagrant
+/static
+*.pyc
+/geocoder/settings/local.py
+/data/*
