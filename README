@@ -9,8 +9,8 @@ We made our own because all the existing lookup services are rubbish. This one's
 API endpoints
 -------------
 
-* Search: /?q=lutjebroek
-* Show: /2751379/
+* Search: http://geocoder.demozoo.org/?q=lutjebroek
+* Show: http://geocoder.demozoo.org/2751379/
 
 
 Installation
