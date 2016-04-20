@@ -1,28 +1,34 @@
+from __future__ import unicode_literals
+
 from django.db import models
 from django.db.models import Q
+from django.utils.encoding import python_2_unicode_compatible
 
 import re
 
 
+@python_2_unicode_compatible
 class Country(models.Model):
 	code = models.CharField(max_length=2, primary_key=True)
 	geonameid = models.PositiveIntegerField(null=True, blank=True)
 	name = models.CharField(max_length=200, unique=True)
 
-	def __unicode__(self):
+	def __str__(self):
 		return self.name
 
 
+@python_2_unicode_compatible
 class Admin1Code(models.Model):
 	geonameid = models.PositiveIntegerField(primary_key=True)
 	code = models.CharField(max_length=20)
 	name = models.CharField(max_length=200)
 	country = models.ForeignKey(Country, related_name="admins1")
 
-	def __unicode__(self):
-		return u'%s, %s' % (self.name, self.country.name)
+	def __str__(self):
+		return '%s, %s' % (self.name, self.country.name)
 
 
+@python_2_unicode_compatible
 class Admin2Code(models.Model):
 	geonameid = models.PositiveIntegerField(primary_key=True)
 	code = models.CharField(max_length=80)
@@ -33,14 +39,15 @@ class Admin2Code(models.Model):
 	class Meta:
 		unique_together = (("country", "admin1", "name"),)
 
-	def __unicode__(self):
-		s = u"{}".format(self.name)
+	def __str__(self):
+		s = '{}'.format(self.name)
 		if self.admin1 is not None:
-			s = u"{}, {}".format(s, self.admin1.name)
+			s = '{}, {}'.format(s, self.admin1.name)
 
-		return u"{}, {}".format(s, self.country.name)
+		return '{}, {}'.format(s, self.country.name)
 
 
+@python_2_unicode_compatible
 class Locality(models.Model):
 	geonameid = models.PositiveIntegerField(primary_key=True)
 	name = models.CharField(max_length=200)
@@ -70,7 +77,7 @@ class Locality(models.Model):
 
 		return ', '.join(parts)
 
-	def __unicode__(self):
+	def __str__(self):
 		return self.long_name
 
 	@staticmethod
@@ -109,6 +116,7 @@ class Locality(models.Model):
 		return Locality.objects.filter(query).order_by('-population')
 
 
+@python_2_unicode_compatible
 class AlternateName(models.Model):
 	locality = models.ForeignKey(Locality, related_name="alternatenames")
 	name = models.CharField(max_length=200)
@@ -116,5 +124,5 @@ class AlternateName(models.Model):
 	is_short_name = models.BooleanField(default=False)
 	is_asciified = models.BooleanField(default=False)
 
-	def __unicode__(self):
+	def __str__(self):
 		return self.name
