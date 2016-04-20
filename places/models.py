@@ -113,7 +113,10 @@ class Locality(models.Model):
 					| Q(admin2__name__iexact=parts[-1]) | Q(admin2__geonameid__in=alt_name_matches)
 				)
 
-		return Locality.objects.filter(query).order_by('-population')
+		return Locality.objects.filter(query).order_by(
+			'-feature_class',  # prefer P (place) to A (administrative area)
+			'-population',
+		)
 
 
 @python_2_unicode_compatible
