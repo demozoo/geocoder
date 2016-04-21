@@ -114,7 +114,6 @@ class Locality(models.Model):
 				)
 
 		return Locality.objects.filter(query).order_by(
-			'-feature_class',  # prefer P (place) to A (administrative area)
 			'-population',
 		)
 
