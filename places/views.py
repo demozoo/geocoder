@@ -27,8 +27,8 @@ def show(request, locality_id):
 		'id': place.pk,
 		'name': place.name,
 		'full_name': place.long_name,
-		'country_name': place.country.name,
-		'country_code': place.country.code,
+		'country_name': place.country.name if place.country else None,
+		'country_code': place.country.code if place.country else None,
 		'latitude': float(place.latitude),
 		'longitude': float(place.longitude),
 	}
