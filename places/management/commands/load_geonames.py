@@ -1,5 +1,5 @@
 from django.conf import settings
-from django.core.management.base import NoArgsCommand
+from django.core.management.base import BaseCommand
 
 from contextlib import contextmanager
 from django.utils.six.moves.urllib.request import urlretrieve
@@ -10,7 +10,7 @@ from django.utils.six import StringIO
 from ...models import Country, Admin1Code, Admin2Code, Locality, AlternateName
 
 
-class Command(NoArgsCommand):
+class Command(BaseCommand):
 	data_dir = os.path.join(settings.BASE_DIR, 'data')
 
 	countries = {}
@@ -76,7 +76,7 @@ class Command(NoArgsCommand):
 
 	def load_admin2_codes(self):
 		objects = []
-		admin2_list = []  # to find duplicated
+		admin2_set = set()  # to find duplicated
 		skipped_duplicated = 0
 		with self.open_file('http://download.geonames.org/export/dump/admin2Codes.txt') as fd:
 			print("Importing admin level 2 codes")
@@ -87,11 +87,11 @@ class Command(NoArgsCommand):
 
 				# if there is a duplicated
 				long_code = "{0}.{1}.{2}".format(country_code, admin1_code, name)
-				if long_code in admin2_list:
+				if long_code in admin2_set:
 					skipped_duplicated += 1
 					continue
 
-				admin2_list.append(long_code)
+				admin2_set.add(long_code)
 
 				geonameid = fields[3]
 				admin1_dic = self.countries[country_code].get(admin1_code)
@@ -236,8 +236,8 @@ class Command(NoArgsCommand):
 		AlternateName.objects.bulk_create(objects)
 		print("{0:8d} AlternateNames loaded".format(processed))
 
-	def handle_noargs(self, **options):
-		self.dir = options.get('dir')
+	def handle(self, *args, **kwargs):
+		# self.dir = options.get('dir')
 
 		self.clear_tables()
 		self.load_countries()

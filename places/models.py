@@ -22,7 +22,7 @@ class Admin1Code(models.Model):
 	geonameid = models.PositiveIntegerField(primary_key=True)
 	code = models.CharField(max_length=20)
 	name = models.CharField(max_length=200)
-	country = models.ForeignKey(Country, related_name="admins1")
+	country = models.ForeignKey(Country, related_name="admins1", on_delete=models.CASCADE)
 
 	def __str__(self):
 		return '%s, %s' % (self.name, self.country.name)
@@ -33,8 +33,8 @@ class Admin2Code(models.Model):
 	geonameid = models.PositiveIntegerField(primary_key=True)
 	code = models.CharField(max_length=80)
 	name = models.CharField(max_length=200)
-	country = models.ForeignKey(Country, related_name="admins2")
-	admin1 = models.ForeignKey(Admin1Code, null=True, blank=True, related_name="admins2")
+	country = models.ForeignKey(Country, related_name="admins2", on_delete=models.CASCADE)
+	admin1 = models.ForeignKey(Admin1Code, null=True, blank=True, related_name="admins2", on_delete=models.CASCADE)
 
 	class Meta:
 		unique_together = (("country", "admin1", "name"),)
@@ -51,9 +51,9 @@ class Admin2Code(models.Model):
 class Locality(models.Model):
 	geonameid = models.PositiveIntegerField(primary_key=True)
 	name = models.CharField(max_length=200)
-	country = models.ForeignKey(Country, null=True, blank=True, related_name="localities")
-	admin1 = models.ForeignKey(Admin1Code, null=True, blank=True, related_name="localities")
-	admin2 = models.ForeignKey(Admin2Code, null=True, blank=True, related_name="localities")
+	country = models.ForeignKey(Country, null=True, blank=True, related_name="localities", on_delete=models.CASCADE)
+	admin1 = models.ForeignKey(Admin1Code, null=True, blank=True, related_name="localities", on_delete=models.CASCADE)
+	admin2 = models.ForeignKey(Admin2Code, null=True, blank=True, related_name="localities", on_delete=models.CASCADE)
 	latitude = models.DecimalField(max_digits=8, decimal_places=5)
 	longitude = models.DecimalField(max_digits=8, decimal_places=5)
 	feature_class = models.CharField(max_length=1)
@@ -120,7 +120,7 @@ class Locality(models.Model):
 
 @python_2_unicode_compatible
 class AlternateName(models.Model):
-	locality = models.ForeignKey(Locality, related_name="alternatenames")
+	locality = models.ForeignKey(Locality, related_name="alternatenames", on_delete=models.CASCADE)
 	name = models.CharField(max_length=200)
 	is_preferred_name = models.BooleanField(default=False)
 	is_short_name = models.BooleanField(default=False)

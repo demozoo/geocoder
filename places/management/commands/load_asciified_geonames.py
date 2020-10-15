@@ -1,11 +1,11 @@
-from django.core.management.base import NoArgsCommand
+from django.core.management.base import BaseCommand
 from django.db.models import Max
 
 from ...models import Locality, AlternateName
 from unidecode import unidecode
 
 
-class Command(NoArgsCommand):
+class Command(BaseCommand):
 	def clear_tables(self):
 		AlternateName.objects.filter(is_asciified=True).delete()
 
@@ -44,9 +44,6 @@ class Command(NoArgsCommand):
 
 			batch_start += batch_size
 
-		AlternateName.objects.bulk_create(objects)
-		print("{0:8d} locality names ASCIIfied".format(processed))
-
 	def load_altnames(self):
 		print("ASCIIfying alt names")
 		batch_size = 10000
@@ -59,7 +56,7 @@ class Command(NoArgsCommand):
 			names = {}
 			objects = []
 
-			for alt_name in AlternateName.objects.filter(id__gte=batch_start, id__lt=batch_start + batch_size):
+			for alt_name in AlternateName.objects.filter(id__gte=batch_start, id__lt=batch_start + batch_size, is_asciified=False):
 				names.setdefault(alt_name.locality_id, set())
 				name = unidecode(alt_name.name)
 				if (
@@ -80,10 +77,7 @@ class Command(NoArgsCommand):
 			print("{0:8d} alt names ASCIIfied".format(processed))
 			batch_start += batch_size
 
-		AlternateName.objects.bulk_create(objects)
-		print("{0:8d} alt names ASCIIfied".format(processed))
-
-	def handle_noargs(self, **options):
+	def handle(self, *args, **kwargs):
 		self.clear_tables()
 		self.load_localities()
 		self.load_altnames()
