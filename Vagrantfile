@@ -26,7 +26,7 @@ Vagrant.configure(2) do |config|
 	
 	# Forward a port from the guest to the host, which allows for outside
 	# computers to access the VM, whereas host only networking does not.
-	config.vm.network "forwarded_port", guest: 8000, host: 8060
+	config.vm.network "forwarded_port", guest: 8060, host: 8060
 	
 	# Share an additional folder to the guest VM.
 	config.vm.synced_folder ".", "/home/vagrant/geocoder"
