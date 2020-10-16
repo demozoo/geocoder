@@ -13,27 +13,27 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.RunSQL(
-            "CREATE INDEX places_country_name_idx ON places_country (UPPER(name));",
+            "CREATE INDEX places_country_name_idx ON places_country (name COLLATE NOCASE);",
             "DROP INDEX places_country_name_idx;"
         ),
 
         migrations.RunSQL(
-            "CREATE INDEX places_admin1code_name_idx ON places_admin1code (UPPER(name));",
+            "CREATE INDEX places_admin1code_name_idx ON places_admin1code (name COLLATE NOCASE);",
             "DROP INDEX places_admin1code_name_idx;"
         ),
 
         migrations.RunSQL(
-            "CREATE INDEX places_admin2code_name_idx ON places_admin2code (UPPER(name));",
+            "CREATE INDEX places_admin2code_name_idx ON places_admin2code (name COLLATE NOCASE);",
             "DROP INDEX places_admin2code_name_idx;"
         ),
 
         migrations.RunSQL(
-            "CREATE INDEX places_locality_name_idx ON places_locality (UPPER(name));",
+            "CREATE INDEX places_locality_name_idx ON places_locality (name COLLATE NOCASE);",
             "DROP INDEX places_locality_name_idx;"
         ),
 
         migrations.RunSQL(
-            "CREATE INDEX places_alternatename_name_idx ON places_alternatename (UPPER(name));",
+            "CREATE INDEX places_alternatename_name_idx ON places_alternatename (name COLLATE NOCASE);",
             "DROP INDEX places_alternatename_name_idx;"
         ),
     ]
