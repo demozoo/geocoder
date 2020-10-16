@@ -20,22 +20,12 @@ apt-get install -y build-essential python python3-dev python3-pip
 # Git (we'd rather avoid people keeping credentials for git commits in the repo, but sometimes we need it for pip requirements that aren't in PyPI)
 apt-get install -y git
 
-# Postgresql
-if ! command -v psql; then
-    apt-get install -y postgresql libpq-dev
-    # Create vagrant pgsql superuser
-    su - postgres -c "createuser -s vagrant"
-fi
-
 # virtualenv global setup
 if [[ ! -f /usr/local/bin/virtualenv ]]; then
     pip3 install virtualenv
 fi
 
 # ---
-
-# postgresql setup for project
-su - vagrant -c "createdb $DB_NAME"
 
 # virtualenv setup for project
 su - vagrant -c "/usr/local/bin/virtualenv $VIRTUALENV_DIR --python=/usr/bin/python3.8 && \

@@ -38,7 +38,7 @@ class Command(BaseCommand):
 		from django.db import connection
 		cursor = connection.cursor()
 		for model in (AlternateName, Locality, Admin2Code, Admin1Code, Country):
-			cursor.execute('TRUNCATE TABLE "{0}" CASCADE'.format(model._meta.db_table))
+			cursor.execute('DELETE FROM {0}'.format(model._meta.db_table))
 
 	def load_countries(self):
 		objects = []

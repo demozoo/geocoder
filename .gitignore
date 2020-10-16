@@ -3,3 +3,4 @@
 *.pyc
 /geocoder/settings/local.py
 /data/*
+/geocoder.sqlite3

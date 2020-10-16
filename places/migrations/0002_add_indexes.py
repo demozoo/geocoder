@@ -16,44 +16,24 @@ class Migration(migrations.Migration):
             "CREATE INDEX places_country_name_idx ON places_country (UPPER(name));",
             "DROP INDEX places_country_name_idx;"
         ),
-        migrations.RunSQL(
-            "CREATE INDEX places_country_name_like_idx ON places_country (UPPER(name) varchar_pattern_ops);",
-            "DROP INDEX places_country_name_like_idx;"
-        ),
 
         migrations.RunSQL(
             "CREATE INDEX places_admin1code_name_idx ON places_admin1code (UPPER(name));",
             "DROP INDEX places_admin1code_name_idx;"
-        ),
-        migrations.RunSQL(
-            "CREATE INDEX places_admin1code_name_like_idx ON places_admin1code (UPPER(name) varchar_pattern_ops);",
-            "DROP INDEX places_admin1code_name_like_idx;"
         ),
 
         migrations.RunSQL(
             "CREATE INDEX places_admin2code_name_idx ON places_admin2code (UPPER(name));",
             "DROP INDEX places_admin2code_name_idx;"
         ),
-        migrations.RunSQL(
-            "CREATE INDEX places_admin2code_name_like_idx ON places_admin2code (UPPER(name) varchar_pattern_ops);",
-            "DROP INDEX places_admin2code_name_like_idx;"
-        ),
 
         migrations.RunSQL(
             "CREATE INDEX places_locality_name_idx ON places_locality (UPPER(name));",
             "DROP INDEX places_locality_name_idx;"
         ),
-        migrations.RunSQL(
-            "CREATE INDEX places_locality_name_like_idx ON places_locality (UPPER(name) varchar_pattern_ops);",
-            "DROP INDEX places_locality_name_like_idx;"
-        ),
 
         migrations.RunSQL(
             "CREATE INDEX places_alternatename_name_idx ON places_alternatename (UPPER(name));",
             "DROP INDEX places_alternatename_name_idx;"
-        ),
-        migrations.RunSQL(
-            "CREATE INDEX places_alternatename_name_like_idx ON places_alternatename (UPPER(name) varchar_pattern_ops);",
-            "DROP INDEX places_alternatename_name_like_idx;"
         ),
     ]
