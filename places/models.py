@@ -2,12 +2,10 @@ from __future__ import unicode_literals
 
 from django.db import models
 from django.db.models import Q
-from django.utils.encoding import python_2_unicode_compatible
 
 import re
 
 
-@python_2_unicode_compatible
 class Country(models.Model):
 	code = models.CharField(max_length=2, primary_key=True)
 	geonameid = models.PositiveIntegerField(null=True, blank=True)
@@ -17,7 +15,6 @@ class Country(models.Model):
 		return self.name
 
 
-@python_2_unicode_compatible
 class Admin1Code(models.Model):
 	geonameid = models.PositiveIntegerField(primary_key=True)
 	code = models.CharField(max_length=20)
@@ -28,7 +25,6 @@ class Admin1Code(models.Model):
 		return '%s, %s' % (self.name, self.country.name)
 
 
-@python_2_unicode_compatible
 class Admin2Code(models.Model):
 	geonameid = models.PositiveIntegerField(primary_key=True)
 	code = models.CharField(max_length=80)
@@ -47,7 +43,6 @@ class Admin2Code(models.Model):
 		return '{}, {}'.format(s, self.country.name)
 
 
-@python_2_unicode_compatible
 class Locality(models.Model):
 	geonameid = models.PositiveIntegerField(primary_key=True)
 	name = models.CharField(max_length=200)
@@ -118,7 +113,6 @@ class Locality(models.Model):
 		)
 
 
-@python_2_unicode_compatible
 class AlternateName(models.Model):
 	locality = models.ForeignKey(Locality, related_name="alternatenames", on_delete=models.CASCADE)
 	name = models.CharField(max_length=200)

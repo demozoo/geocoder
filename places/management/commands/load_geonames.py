@@ -2,10 +2,10 @@ from django.conf import settings
 from django.core.management.base import BaseCommand
 
 from contextlib import contextmanager
-from django.utils.six.moves.urllib.request import urlretrieve
+from urllib.request import urlretrieve
 import os.path
 from zipfile import ZipFile
-from django.utils.six import StringIO
+from io import StringIO
 
 from ...models import Country, Admin1Code, Admin2Code, Locality, AlternateName
 
