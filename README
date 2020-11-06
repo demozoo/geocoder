@@ -13,22 +13,25 @@ API endpoints
 * Show: http://geocoder.demozoo.org/2751379/
 
 
+Tech breakdown
+--------------
+
+In use, this is a simple Django app backed by a sqlite database (1.4Gb in size as of November 2020). Since it's stateless and read-only, this makes it easy to package up in a self-contained way for cloud hosting platforms, without having to worry about persistent storage or database connections.
+
+The database is built using a set of Django management commands which download the data files from geonames.org (approx 500Mb) and load them into the database. This takes about 4Gb of memory and 2-3 hours to complete. I don't recommend doing it in a VM - that just makes it needlessly slow.
+
 Installation
 ------------
+
+To build the database, run the following from a clean Python 3.x virtualenv:
+
+    make data
+
+Or if you absolutely insist on using a VM:
 
     vagrant up
     vagrant ssh
     ./manage.py runserver 0.0.0.0:8000
-
-or
-
-    pip install -r requirements.txt
-    ./manage.py migrate
-    ./manage.py load_geonames
-    ./manage.py load_asciified_geonames
-    ./manage.py runserver
-
-Running `load_geonames` and `load_asciified_geonames` requires about 2GB memory. Running the service itself probably takes considerably less.
 
 
 Acceptable use policy
