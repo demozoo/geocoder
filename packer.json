@@ -1,0 +1,50 @@
+{
+    "builders": [
+        {
+            "type": "openstack",
+            "image_name": "demozoo-geocoder",
+            "source_image": "f5c7d8e8-5e1d-46b8-8815-daa0024f4fc5",
+            "flavor": "6",
+            "floating_ip_pool": "Public",
+            "security_groups": ["default"],
+            "ssh_username": "ubuntu"
+        },
+        {
+            "type": "vagrant",
+            "provider": "virtualbox",
+            "communicator": "ssh",
+            "source_path": "ubuntu/focal64"
+        }
+    ],
+    "provisioners": [
+        {
+            "type": "shell",
+            "inline": [
+                "sleep 30",
+                "sudo apt-get update",
+                "sudo apt-get install -y nginx supervisor build-essential python python3-dev python3-pip",
+                "mkdir /home/ubuntu/geocoder"
+            ]
+        },
+        {
+            "type": "file",
+            "sources": [
+                "etc", "geocoder", "places",
+                "geocoder.sqlite3", "manage.py", "requirements.txt"
+            ],
+            "destination": "/home/ubuntu/geocoder/"
+        },
+        {
+            "type": "shell",
+            "inline": [
+                "sudo pip3 install -r /home/ubuntu/geocoder/requirements.txt",
+                "chmod a+x /home/ubuntu/geocoder/manage.py",
+                "sudo ln -s /home/ubuntu/geocoder/etc/supervisor.conf /etc/supervisor/conf.d/geocoder.conf",
+                "sudo ln -s /home/ubuntu/geocoder/etc/nginx.conf /etc/nginx/sites-available/geocoder",
+                "sudo ln -s /etc/nginx/sites-available/geocoder /etc/nginx/sites-enabled/geocoder",
+                "sudo /etc/init.d/supervisor reload",
+                "sudo /etc/init.d/nginx reload"
+            ]
+        }
+    ]
+}

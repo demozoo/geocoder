@@ -16,7 +16,7 @@ LOGGING = {
 		'default': {
 			'level': 'DEBUG',
 			'class': 'logging.handlers.RotatingFileHandler',
-			'filename': '/home/demozoo/log/geocoder.log',
+			'filename': '/home/ubuntu/geocoder.log',
 			'maxBytes': 10485760,
 			'backupCount': 500,
 			'formatter': 'standard',

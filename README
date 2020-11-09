@@ -31,7 +31,8 @@ Or if you absolutely insist on using a VM:
 
     vagrant up
     vagrant ssh
-    ./manage.py runserver 0.0.0.0:8000
+    cd geocoder
+    make data
 
 
 Acceptable use policy

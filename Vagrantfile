@@ -24,5 +24,5 @@ Vagrant.configure(2) do |config|
 	config.vm.synced_folder ".", "/home/vagrant/geocoder"
 	
 	# Enable provisioning with a shell script.
-	config.vm.provision :shell, :path => "etc/install/install.sh", :args => "geocoder"
+	config.vm.provision :shell, :path => "etc/install/vagrant.sh", :args => "geocoder"
 end
